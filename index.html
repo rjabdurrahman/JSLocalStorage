@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSON DATABASE</title>
+</head>
+<body>
+    <label>Name: </label> <input type="text" id="inputName"><br>
+    <label>Age: </label> <input type="text" id="inputAge"><br>
+    <label>Class: </label> <input type="text" id="inputClass"><br>
+    <input type="submit" onclick="saveLocal()" value="Submit">
+    <div id="test"></div>
+    <table id="dataPage" border="1"></table>
+    <script>
+    function saveLocal(){
+        var i = ++localStorage.length;
+        var person = {
+            name : "",
+            age : "",
+            class : ""
+        }
+        person.name = document.getElementById("inputName").value;
+        person.age = document.getElementById("inputAge").value;
+        person.class = document.getElementById("inputClass").value;
+
+        localStorage.setItem("item" + i, JSON.stringify(person));
+
+        document.getElementById("inputName").value = "";
+        document.getElementById("inputAge").value = "";
+        document.getElementById("inputClass").value = "";
+
+        document.getElementById("test").innerHTML = "Saved Sucessfully";
+        updateData();
+    }
+    function updateData(){
+        var obj = JSON.parse(localStorage.getItem("item" + localStorage.length));
+        document.getElementById("dataPage").innerHTML += "<tr><th>" + obj.name + "</th><th>" + obj.age + "</th><th>" + obj.class + "</th></tr>";
+    }
+    for(var j = 1; j <= localStorage.length; j++){
+        var obj = JSON.parse(localStorage.getItem("item" + j));
+        document.getElementById("dataPage").innerHTML += "<tr><th>" + obj.name + "</th><th>" + obj.age + "</th><th>" + obj.class + "</th></tr>";
+    }
+    </script>
+</body>
+</html>
